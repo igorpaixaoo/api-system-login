@@ -4,6 +4,7 @@ import com.igor.system_login.entity.Users;
 import com.igor.system_login.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMessage;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -24,14 +25,16 @@ public class UsersController {
     }
 
     @GetMapping("findEmail")
-    public Users findEmail(@RequestParam("email") String email){
-        if(usersService.findByEmail(email) != null){
-            return usersService.findByEmail(email);
-        }else return null;
+    public ResponseEntity<Users> findEmail(@RequestParam("email") String email){
+        Users user = usersService.findByEmail(email);
+        if(user != null){
+            return ResponseEntity.ok(user);
+        }else return ResponseEntity.notFound().build();
     }
 
     @PostMapping("create")
-    public Users create(@RequestBody Users users){
-        return usersService.createUsers(users);
+    public ResponseEntity<Users> create(@RequestBody Users users){
+        Users user = usersService.createUsers(users);
+        return ResponseEntity.ok(user);
     }
 }
