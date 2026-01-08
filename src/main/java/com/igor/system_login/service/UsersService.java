@@ -22,7 +22,9 @@ public class UsersService {
     }
 
     public Users createUsers(Users users){
-        return usersRepository.save(users);
+        if(!usersRepository.existsByEmail(users.getEmail())){
+            return usersRepository.save(users);
+        }else throw new RuntimeException("Email already exists");
     }
 
 }

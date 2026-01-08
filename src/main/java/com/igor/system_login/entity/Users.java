@@ -13,7 +13,7 @@ public class Users {
     private String nome;
     @Column
     private String sobrenome;
-    @Column
+    @Column(unique = true)
     private String email;
     @Column
     private String senha;
